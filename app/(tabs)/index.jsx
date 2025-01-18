@@ -5,7 +5,7 @@ import { useRouter } from "expo-router";
 import MyButton from "../../components/MyButton";
 import { ScaledSheet } from "react-native-size-matters";
 import { PRIMARY_COLOR } from "@/constants/Colors";
-import { FontAwesome, FontAwesome6, MaterialIcons } from "@expo/vector-icons";
+import { AntDesign, FontAwesome, FontAwesome6, MaterialIcons } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
 export default function index() {
 
@@ -70,6 +70,8 @@ export default function index() {
      <View style={styles.loanCardWrapper}>
      <View style={styles.loanCard}>
 
+      <Text style={{fontSize:26,fontWeight:'bold',color:'white'}}>TK.12000</Text>
+
 <View style={{position:'absolute',top:'40%',left:15,flexDirection:'row',alignItems:'center',gap:10}}>
 <Image
   source={require('../../assets/images/sim.png')}
@@ -99,42 +101,42 @@ export default function index() {
       </View>
 
 
-      <View style={{flexDirection:'row',gap:30,alignItems:'center',justifyContent:'center',marginVertical:20}}>
-        <TouchableOpacity style={{alignItems:'center',gap:5,backgroundColor:PRIMARY_COLOR,padding:5,borderRadius:10,}}>
+      <View style={{flexDirection:'row',justifyContent:'space-between',marginVertical:20}}>
+        <TouchableOpacity style={{alignItems:'center',gap:5,backgroundColor:PRIMARY_COLOR,width:"30%",borderRadius:10,paddingVertical:10}}>
 
-          <FontAwesome6
-          name="user"
+          <AntDesign
+          name="customerservice"
           color={'white'}
-          size={30}
+          size={40}
           />
 
-          <Text style={{fontSize:18,color:'white'}}>Profile</Text>
+          <Text style={{fontSize:14,color:'white',textAlign:'center'}}>{"Help\nCenter"}</Text>
 
         </TouchableOpacity>
 
-        <TouchableOpacity style={{alignItems:'center',gap:5,backgroundColor:PRIMARY_COLOR,padding:5,borderRadius:10,}}>
+        <TouchableOpacity style={{alignItems:'center',gap:5,backgroundColor:PRIMARY_COLOR,width:"30%",borderRadius:10,paddingVertical:10}}>
 
 <FontAwesome6
-name="user"
+name="users"
 color={'white'}
-size={30}
+size={40}
 />
 
-<Text style={{fontSize:18,color:'white'}}>Profile</Text>
+<Text style={{fontSize:14,color:'white',textAlign:'center'}}>{"Group\nChat"}</Text>
 
 </TouchableOpacity>
 
 
 
-<TouchableOpacity style={{alignItems:'center',gap:5,backgroundColor:PRIMARY_COLOR,padding:5,borderRadius:10,}}>
+<TouchableOpacity style={{alignItems:'center',gap:5,backgroundColor:PRIMARY_COLOR,width:"30%",borderRadius:10,paddingVertical:10}}>
 
 <FontAwesome6
-name="user"
+name="calculator"
 color={'white'}
-size={30}
+size={40}
 />
 
-<Text style={{fontSize:18,color:'white'}}>Profile</Text>
+<Text style={{fontSize:14,color:'white',textAlign:'center'}}>{"Loan\nCalculator"}</Text>
 
 </TouchableOpacity>
 
@@ -144,6 +146,12 @@ size={30}
 
      </View>
 
+
+
+<TouchableOpacity style={{height:52,margin:15,backgroundColor:PRIMARY_COLOR,alignItems:'center',justifyContent:'center',borderRadius:10,}}>
+  <Text style={{fontSize:22,color:'white'}}>APPLY FOR LOAN</Text>
+
+</TouchableOpacity>
      
     </View>
   );
@@ -152,7 +160,7 @@ size={30}
 const styles = ScaledSheet.create({
   container: {
     flex: 1,
-    marginTop: "18@vs",
+    marginTop: "28@vs",
   },
 
   header: {
@@ -184,16 +192,17 @@ const styles = ScaledSheet.create({
 
   loanCardWrapper:{
     backgroundColor:'white',
-    paddingHorizontal:15,
+    padding:15,
     margin:10,
-    borderRadius:10
+    borderRadius:10,
+    elevation:5
 
   },
 
   loanCard: {
-    height: "160@vs",
+    height: "170@vs",
 
-    margin: 15,
+
     elevation: 5,
 padding:10,
     backgroundColor: PRIMARY_COLOR,
