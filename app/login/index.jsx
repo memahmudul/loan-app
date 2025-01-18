@@ -1,89 +1,114 @@
-import React, { useState } from 'react'
-import { Alert, StyleSheet, TextInput, View } from 'react-native'
+import React, { useState } from "react";
+import { Alert, StyleSheet, TextInput, ToastAndroid, View } from "react-native";
 
-import {
-  
-  PRIMARY_COLOR,INPUT_BG
-} from "@/constants/Colors";
-import MyButton from '../../components/MyButton';
-import { supabase } from '../../utils/supabase';
-import { useRouter } from 'expo-router';
-import { useDispatch } from 'react-redux';
+import { PRIMARY_COLOR, INPUT_BG } from "@/constants/Colors";
+import MyButton from "../../components/MyButton";
+import { supabase } from "../../utils/supabase";
+import { useRouter } from "expo-router";
+import { useDispatch } from "react-redux";
+import { authenticate } from "../redux/features/AuthSlice";
 export default function index() {
-
   const dispatch = useDispatch();
   const router = useRouter();
 
 
-
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [loading, setLoading] = useState(false)
+  const [name, setname] = useState("")
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   async function signInWithEmail() {
-    setLoading(true)
-    const { data:{user},error } = await supabase.auth.signInWithPassword({
+    setLoading(true);
+    const { error } = await supabase.auth.signInWithPassword({
       email: email,
       password: password,
     })
 
-    console.log(user);
-    
+
+
 
     if (error) {
-      Alert.alert(error.message)
-    }else{
-      router.replace('/(tabs)')
+      ToastAndroid.show(error.message,ToastAndroid.LONG)
+    } else {
+      ToastAndroid.show('Login Successfull',ToastAndroid.LONG)
+      router.replace("/(tabs)");
+ 
     }
-    setLoading(false)
+    setLoading(false);
   }
 
   async function signUpWithEmail() {
-    setLoading(true)
+    setLoading(true);
     const {
       data: { session },
       error,
     } = await supabase.auth.signUp({
-      email: email,
-      password: password,
-    })
+      name,
+      email,
+      password,
+    });
 
-    if (error) Alert.alert(error.message)
-    if (!session) Alert.alert('Please check your inbox for email verification!')
-    setLoading(false)
+    if (error) {
+      ToastAndroid.show(error.message,ToastAndroid.LONG)
+    } else {
+      const params = { name,email, password };
+
+      const { data, error } = await supabase
+        .from("user")
+        .insert([params])
+        .select();
+
+      if (!error) {
+
+        dispatch(authenticate(params))
+       ToastAndroid.show("User Created Successfully",ToastAndroid.LONG)
+       router.replace("/(tabs)");
+      }else{
+        ToastAndroid.show(error.message,ToastAndroid.LONG)
+      }
+    }
+
+    setLoading(false);
   }
 
   return (
     <View style={styles.container}>
-      <View style={[styles.verticallySpaced, styles.mt20]}>
-      <TextInput
-            style={styles.input}
-            value={email}
-            onChangeText={setEmail}
-            placeholder="Enter Your Number"
-            placeholderTextColor={PRIMARY_COLOR}
-          />
-      </View>
-      <View style={styles.verticallySpaced}>
-      <TextInput
-            style={styles.input}
-            value={password}
-            onChangeText={setPassword}
-            placeholder="Enter Your Password"
-            placeholderTextColor={PRIMARY_COLOR}
-          />
+
+<View style={[styles.verticallySpaced, styles.mt20]}>
+        <TextInput
+          style={styles.input}
+          value={name}
+          onChangeText={setname}
+          placeholder="Enter Your Name"
+          placeholderTextColor={PRIMARY_COLOR}
+        />
       </View>
       <View style={[styles.verticallySpaced, styles.mt20]}>
-        <MyButton title="LOGIN" iconName="login" onPress={signInWithEmail}/>
-     </View>
-      <View style={styles.verticallySpaced}>
-      <MyButton title="SIGN UP" iconName="login" onPress={signUpWithEmail}/>
+        <TextInput
+          style={styles.input}
+          value={email}
+          onChangeText={setEmail}
+          placeholder="Enter Your Email"
+          placeholderTextColor={PRIMARY_COLOR}
+        />
       </View>
-
-
-      
+      <View style={styles.verticallySpaced}>
+        <TextInput
+          style={styles.input}
+          value={password}
+          onChangeText={setPassword}
+          placeholder="Enter Your Password"
+          placeholderTextColor={PRIMARY_COLOR}
+        />
+      </View>
+      <View style={[styles.verticallySpaced, styles.mt20]}>
+        <MyButton title="LOGIN" iconName="login" onPress={signInWithEmail} />
+      </View>
+      <View style={styles.verticallySpaced}>
+        <MyButton title="SIGN UP" iconName="login" onPress={signUpWithEmail} />
+      </View>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -94,7 +119,7 @@ const styles = StyleSheet.create({
   verticallySpaced: {
     paddingTop: 4,
     paddingBottom: 4,
-    alignSelf: 'stretch',
+    alignSelf: "stretch",
   },
   mt20: {
     marginTop: 20,
@@ -107,4 +132,4 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: "PoppinsRegular",
   },
-})
+});

@@ -8,6 +8,7 @@ import 'react-native-reanimated';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistor, store } from './redux/store';
+import { PRIMARY_COLOR } from '@/constants/Colors';
 
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -33,7 +34,7 @@ export default function RootLayout() {
     
     <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
-    <StatusBar style="auto" />
+    <StatusBar style="auto" backgroundColor={PRIMARY_COLOR} />
 <Stack>
 <Stack.Screen name="index" options={{  }} />
  

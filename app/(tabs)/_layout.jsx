@@ -34,17 +34,9 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
-  header:()=> <View style={{height:90,width:'full',backgroundColor:'white',flexDirection:'row',alignItems:'center',justifyContent:'center',paddingTop:25,elevation:10,marginBottom:5}}>
-<FontAwesome6 size={35} name="stethoscope" color={PRIMARY_COLOR} />
+        headerShown:false,
 
-    <Text style={{fontSize:30,color:'#36A793',fontWeight:'bold',}}>SMART DOCTOR</Text>
-  </View>,
-
-
-
-
-  
+        title: 'Home',
           tabBarIcon: () => <FontAwesome size={28} name="home" color={PRIMARY_COLOR} />,
         }}
       />
